@@ -39,7 +39,7 @@ function generateClass() {
     url='https://www.dnd5eapi.co/api/classes/'
     url+=$randomClass
 
-    echo $url
+    # echo $url
     class="$(curl -L "$url" -H 'Accept: application/json' --silent)"
     echo $class
 
@@ -68,12 +68,16 @@ function generateGender(){
 ##### Generate name - AI? or API? #####
 function generateName(){ #RACE SHOULD BE LOWERCASE
     race=$1
-    binaryArray=("male" "female")
-    randomBinary=${binaryArray[$((RANDOM % 2))]}
-    [[ $2 = non-binary ]] && gender=$randomBinary || gender=$2
-    
-    # nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
+    # binaryArray=("male" "female")
+    # randomBinary=${binaryArray[$((RANDOM % 2))]}
+    # [[ $2 = non-binary ]] && gender=$randomBinary || gender=$2
+    if [ "$gender" = non-binary ]; then
+    nameUrl="https://muna.ironarachne.com/$race/?count=1"
+    else
     nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
+    fi
+    # nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
+    
     # echo $nameUrl
 
     name="$(curl -L "$nameUrl" -H 'Accept: application/json' --silent  | jq '.names'[0])"   
@@ -104,17 +108,20 @@ function main(){
     charMap["race"]=$(generateRace)
     # echo ${charMap["race"]}
     charMap["race_name"]="$(echo ${charMap["race"]} | jq '.index' | tr -d '"' | tr -d $cr)"
-    echo ${charMap["race_name"]}
-    echo $race_name
+    # echo ${charMap["race_name"]}
+    # echo $race_name
     charMap["class"]=$(generateClass)
-    echo ${charMap["class"]}
+    # echo ${charMap["class"]}
     charMap["class_name"]="$(echo ${charMap["class"]} | jq '.index' | tr -d '"' | tr -d $cr)"
-    echo ${charMap["class_name"]}
+    # echo ${charMap["class_name"]}
     charMap["gender"]=$(generateGender)
-    echo ${charMap["gender"]}
-    echo $char_gender
+    # echo ${charMap["gender"]}
+    # echo $char_gender
     charMap["name"]=$(generateName "${charMap["race_name"]}" "${char_gender}") 
-    echo ${charMap["name"]}
+    # echo ${charMap["name"]}
+
+
+    echo Your randomly generated character is a ${charMap[gender]} ${charMap[race_name]} ${charMap[class_name]} named ${charMap[name]}
 
     ###### JSON --> Array #######
     # jq -r 'to_entries|map("race[\(.key)]=\(.value|tostring)")|.[]' $(generateRace)
@@ -151,7 +158,6 @@ function main(){
     ## use pdftk to fill pdf fillable form of character sheet
     #### pdftk charSheetFormFillable.pdf fill_form charData.fdf output charSheet.pdf
     #### https://www.youtube.com/watch?v=eCPcSdkapXg
-echo DONE MAIN
 
 }
 main
