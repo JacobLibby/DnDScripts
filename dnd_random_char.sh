@@ -67,25 +67,23 @@ function generateGender(){
 
 ##### Generate name - AI? or API? #####
 function generateName(){ #RACE SHOULD BE LOWERCASE
-    race=$1
+    race="$(echo $1 | tr -d '-')"
     gender=$2
     
     # binaryArray=("male" "female")
     # randomBinary=${binaryArray[$((RANDOM % 2))]}
     # [[ $2 = non-binary ]] && gender=$randomBinary || gender=$2
+
     if [ "$gender" = "non-binary" ]; then
         nameUrl="https://muna.ironarachne.com/$race/?count=1"
     else
         nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
     fi
-    # nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
-    
 
     name="$(curl -L "$nameUrl" -H 'Accept: application/json' --silent  | jq '.names'[0])"   
     name="$(echo $name | tr -d '"')"
 
     echo $name
-    # echo $nameUrl
 }
 ##### #####
 
@@ -107,17 +105,15 @@ function generateName(){ #RACE SHOULD BE LOWERCASE
 function main(){
     declare -A charMap
     charMap["race"]=$(generateRace)
-    # echo ${charMap["race"]}
+    #echo ${charMap["race"]}
     charMap["race_name"]="$(echo ${charMap["race"]} | jq '.index' | tr -d '"' | tr -d $cr)"
-    # echo ${charMap["race_name"]}
-    # echo $race_name
+    # echo ${charMap["race_name"]} | cat -v
     charMap["class"]=$(generateClass)
     # echo ${charMap["class"]}
     charMap["class_name"]="$(echo ${charMap["class"]} | jq '.index' | tr -d '"' | tr -d $cr)"
     # echo ${charMap["class_name"]}
     charMap["gender"]=$(generateGender)
     # echo ${charMap["gender"]}
-    # echo $char_gender
     charMap["name"]=$(generateName "${charMap["race_name"]}" "${char_gender}") 
     # echo ${charMap["name"]}
 
