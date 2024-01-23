@@ -68,17 +68,18 @@ function generateGender(){
 ##### Generate name - AI? or API? #####
 function generateName(){ #RACE SHOULD BE LOWERCASE
     race=$1
+    gender=$2
+    
     # binaryArray=("male" "female")
     # randomBinary=${binaryArray[$((RANDOM % 2))]}
     # [[ $2 = non-binary ]] && gender=$randomBinary || gender=$2
-    if [ "$gender" = non-binary ]; then
-    nameUrl="https://muna.ironarachne.com/$race/?count=1"
+    if [ "$gender" = "non-binary" ]; then
+        nameUrl="https://muna.ironarachne.com/$race/?count=1"
     else
-    nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
+        nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
     fi
     # nameUrl="https://muna.ironarachne.com/$race/?count=1&nameType=$gender"
     
-    # echo $nameUrl
 
     name="$(curl -L "$nameUrl" -H 'Accept: application/json' --silent  | jq '.names'[0])"   
     name="$(echo $name | tr -d '"')"
