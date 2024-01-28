@@ -8,9 +8,10 @@ Currently, the project generates a random race, class, gender, and name for a Du
 I am currently working on generating additional character information (subrace, level, etc) and am considering allowing user input for some fields.
 
 I will in the future be working on:
-* Using generated content to fill a formfillable pdf of a character sheet
-* Using an AI text to image API to create portraits of the character generated (possibly using https://huggingface.co/DeepFloyd or OpenAI)
-
+* Using an AI generative text model to create a backstory for the generated character
+* Using an AI text to image API to create portraits of the character generated (most likely through Huggingface)
+* Filling a formfillable pdf of a character sheet with all generated content
+  
 # Running the Project
 
 1) git clone the repo
