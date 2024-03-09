@@ -1,5 +1,5 @@
 # DnDScripts
-Bash scripts created to randomly generate Dungeons and Dragongs 5th Edition content
+Bash scripts created to randomly generate Dungeons and Dragons 5th Edition content
 
 # Current Status
 
