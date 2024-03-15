@@ -8,7 +8,7 @@ echo " - Generating Random D&D 5e Playable Character - "
 #curl -X GET "https://www.dnd5eapi.co/api/ability-scores/cha" -H "Accept: application/json"
 
 ###### Generate race #####
-function generateRace (){
+function generateRace(){
     raceArray=("dragonborn" "dwarf" "elf" "gnome" "half-elf" "half-orc" "halfling" "human" "tiefling")
     raceArrayLen=${#raceArray[@]}
     randomRace=${raceArray[$((RANDOM % $raceArrayLen))]}
@@ -21,7 +21,6 @@ function generateRace (){
 
     # echo $url
     race="$(curl -L "$url" -H 'Accept: application/json' --silent)"
-    # echo $race
     echo $race
 }
 ##### #####
@@ -104,8 +103,9 @@ function generateName(){ #RACE SHOULD BE LOWERCASE
 
 function main(){
     declare -A charMap
+
     charMap["race"]=$(generateRace)
-    #echo ${charMap["race"]}
+    # echo ${charMap["race"]}
     charMap["race_name"]="$(echo ${charMap["race"]} | jq '.index' | tr -d '"' | tr -d $cr)"
     # echo ${charMap["race_name"]} | cat -v
     charMap["class"]=$(generateClass)
@@ -118,7 +118,7 @@ function main(){
     # echo ${charMap["name"]}
 
 
-    echo Your randomly generated character is a ${charMap[gender]} ${charMap[race_name]} ${charMap[class_name]} named ${charMap[name]}
+    echo Your randomly generated character is a ${charMap["gender"]} ${charMap["race_name"]} ${charMap["class_name"]} named ${charMap["name"]}
 
     ###### JSON --> Array #######
     # jq -r 'to_entries|map("race[\(.key)]=\(.value|tostring)")|.[]' $(generateRace)
