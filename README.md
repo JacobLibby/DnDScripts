@@ -18,3 +18,6 @@ I will in the future be working on:
 2) make sure bash, curl, and jq are installed and updated
 3) navigate to the directory
 4) run `bash dnd_random_char.sh`
+
+# Notes
+I have experienced my anti-virus (Avast) blocking the `curl` commands within the bash script. If you are only seeing the gender data field being generated, I would recommend either temporarily disabling your anti-virus (and just using Windows Defender if you are on Windows OS) or switching temporarily to a different anti-virus.
