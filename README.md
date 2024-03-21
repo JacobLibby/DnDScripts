@@ -11,6 +11,7 @@ I will in the future be working on:
 * Using an AI generative text model to create a backstory for the generated character
 * Using an AI text to image API to create portraits of the character generated (most likely through Huggingface)
 * Filling a formfillable pdf of a character sheet with all generated content
+* Creating a full-stack version of this project?
   
 # Running the Project
 
